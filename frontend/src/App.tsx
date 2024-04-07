@@ -1,11 +1,16 @@
-import { Button } from "./components/ui/button";
-
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
   )
 }
 
