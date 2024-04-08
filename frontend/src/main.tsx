@@ -7,11 +7,13 @@ import { createBrowserRouter } from 'react-router-dom';
 
 //Pages
 import Home from './pages/Home.tsx';
+import Auth from './pages/Auth.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true}  element={<Home />} />
+      <Route path='/auth' element={<Auth />} />
     </Route>
   )
 )
