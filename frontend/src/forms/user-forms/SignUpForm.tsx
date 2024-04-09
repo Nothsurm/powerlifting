@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { createUser } from '@/api/UsersApi';
-import { toast } from 'sonner';
+import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
     username: z.string().min(5, 'Username must be at least 5 characters'),
@@ -21,7 +21,6 @@ export type UserData = z.infer<typeof formSchema>
 
 export default function SignUpForm() {
     const { createUser: createNewUser, isPending } = createUser()
-    const navigate = useNavigate()
 
     const form = useForm<UserData>({
         resolver: zodResolver(formSchema),
@@ -46,6 +45,7 @@ export default function SignUpForm() {
         <Link to='/' className='text-3xl font-bold'>
             <span className='text-blue-500'>POWER</span>LIFTING
         </Link>
+        <p className='flex justify-center text-2xl'>Welcome</p>
             <FormField 
                 control={form.control}
                 name='username'
@@ -90,18 +90,24 @@ export default function SignUpForm() {
                 )}    
             />
             {isPending ? (
-                <Button type='submit' disabled={isPending} className='bg-blue-500 hover:bg-blue-600'>
+                <Button type='submit' disabled={isPending} className='bg-blue-500 hover:bg-blue-600 w-full'>
                     Signing Up...
                 </Button>
             ) : (
-                <Button type='submit' className='bg-blue-500 hover:bg-blue-600'>
+                <Button type='submit' className='bg-blue-500 hover:bg-blue-600 w-full'>
                     Sign Up
                 </Button>
             )}
-            <p className='text-sm'>Already have an account?</p>
-            <Link to='/signin' className='text-blue-500 hover:underline'>
-                Sign In
-            </Link>
+            <div className="flex gap-2 text-sm">
+                <p>Already have an account?</p>
+                <Link to='/signin' className='text-blue-500 hover:underline'>
+                    Sign In
+                </Link>
+            </div>
+            <Separator />
+            <Button className='w-full'>
+                Continue with Google
+            </Button>
         </form>
     </Form>
   )

@@ -1,5 +1,5 @@
-import { CreateUserRequest, User } from "@/types"
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { CreateUserRequest } from "@/types"
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 

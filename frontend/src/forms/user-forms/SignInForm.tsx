@@ -5,6 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
     email: z.string().email({
@@ -36,6 +37,7 @@ export default function SignInForm() {
         <Link to='/' className='text-3xl font-bold'>
             <span className='text-blue-500'>POWER</span>LIFTING
         </Link>
+        <p className='flex justify-center text-2xl'>Welcome</p>
             <FormField 
                 control={form.control}
                 name='email'
@@ -62,13 +64,19 @@ export default function SignInForm() {
                     </FormItem>
                 )}    
             />
-            <Button type='submit' className='bg-blue-500 hover:bg-blue-600'>
+            <Button type='submit' className='bg-blue-500 hover:bg-blue-600 w-full'>
                 Sign In
             </Button>
-            <p className='text-sm'>Don't have an account?</p>
-            <Link to='/signup' className='text-blue-500 hover:underline'>
-                Sign Up
-            </Link>
+            <div className="flex gap-2 text-sm">
+                <p className='text-sm'>Don't have an account?</p>
+                <Link to='/signup' className='text-blue-500 hover:underline'>
+                    Sign Up
+                </Link>
+            </div>
+            <Separator />
+            <Button className='w-full'>
+                Continue with Google
+            </Button>
         </form>
     </Form>
   )
