@@ -24,7 +24,7 @@ export default function Header() {
         </h1>
       </div>
       <div className="">
-        <Link to='/auth'>
+        <Link to='/signin'>
           <Button className='bg-blue-500 hover:bg-blue-600'>Login / Register</Button>
         </Link>
       </div>
