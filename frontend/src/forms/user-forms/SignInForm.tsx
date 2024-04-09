@@ -32,7 +32,7 @@ export default function SignInForm() {
 
   return (
     <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 bg-zinc-500 p-10 text-neutral-200 rounded-lg'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 bg-zinc-100 p-10 text-zinc-800 rounded-lg'>
         <Link to='/' className='text-3xl font-bold'>
             <span className='text-blue-500'>POWER</span>LIFTING
         </Link>
@@ -66,7 +66,7 @@ export default function SignInForm() {
                 Sign In
             </Button>
             <p className='text-sm'>Don't have an account?</p>
-            <Link to='/signup' className='text-blue-200 hover:underline'>
+            <Link to='/signup' className='text-blue-500 hover:underline'>
                 Sign Up
             </Link>
         </form>
