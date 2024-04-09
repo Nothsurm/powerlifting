@@ -64,6 +64,7 @@ export default function SignInForm() {
                     </FormItem>
                 )}    
             />
+            <p className='text-sm text-blue-500 hover:underline'>Forgot Password?</p>
             <Button type='submit' className='bg-blue-500 hover:bg-blue-600 w-full'>
                 Sign In
             </Button>
