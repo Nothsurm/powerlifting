@@ -6,6 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Separator } from '@/components/ui/separator';
+import { useDispatch } from 'react-redux';
+
+import { loginUser } from '@/api/UsersApi';
+import { setCredentials } from '@/redux/features/authSlice';
 
 const formSchema = z.object({
     email: z.string().email({
@@ -17,6 +21,8 @@ const formSchema = z.object({
 export type UserData = z.infer<typeof formSchema>
 
 export default function SignInForm() {
+    const dispatch = useDispatch()
+    const { loginUser: loginNewUser, isPending } = loginUser()
 
     const form = useForm<UserData>({
         resolver: zodResolver(formSchema),
@@ -26,9 +32,12 @@ export default function SignInForm() {
         }
     })
 
-    function onSubmit(values: UserData) {
-        console.log(values);
-        
+    async function onSubmit(values: UserData) {
+        await loginNewUser({
+            email: values.email,
+            password: values.password
+        })
+        dispatch(setCredentials({...values}))
     }
 
   return (

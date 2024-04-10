@@ -66,8 +66,9 @@ const logoutUser = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Logout successfull'})
 }
 
+
 export default {
     createUser,
     loginUser,
-    logoutUser
+    logoutUser,
 }
