@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -10,11 +10,17 @@ dotenv.config()
 connectDB();
 
 const app = express();
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}))
 
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+
+// Allows CORS to send Cookies
+
 
 //Routes
 app.use('/api/users', userRoutes)
