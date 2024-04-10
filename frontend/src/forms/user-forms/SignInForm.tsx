@@ -10,6 +10,9 @@ import { useDispatch } from 'react-redux';
 
 import { loginUser } from '@/api/UsersApi';
 import { setCredentials } from '@/redux/features/authSlice';
+import { useState } from 'react';
+
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -23,6 +26,7 @@ export type UserData = z.infer<typeof formSchema>
 export default function SignInForm() {
     const dispatch = useDispatch()
     const { loginUser: loginNewUser, isPending } = loginUser()
+    const [visible, setVisible] = useState(false)
 
     const form = useForm<UserData>({
         resolver: zodResolver(formSchema),
@@ -54,7 +58,7 @@ export default function SignInForm() {
                     <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                            <Input type='email' placeholder='Johndoe@email.com' {...field} className='text-zinc-800' />
+                            <Input type='email' placeholder='Johndoe@email.com' {...field}/>
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -67,7 +71,20 @@ export default function SignInForm() {
                     <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                            <Input type='password' placeholder='*******' {...field} className='text-zinc-800' />
+                        <div className="flex items-center gap-2">
+                            <Input 
+                                type={visible ? 'text' : 'password'} 
+                                placeholder='*******' 
+                                {...field} 
+                            />
+                            <button type='button' onClick={() => setVisible(!visible)}>
+                                { visible ? (
+                                    <FaRegEye />
+                                ) : (
+                                    <FaRegEyeSlash />
+                                )}
+                            </button>
+                        </div>
                         </FormControl>
                         <FormMessage />
                     </FormItem>

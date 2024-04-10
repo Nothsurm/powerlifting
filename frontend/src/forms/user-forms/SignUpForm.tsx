@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 
 import { createUser } from '@/api/UsersApi';
 import { Separator } from '@/components/ui/separator';
+import { useState } from 'react';
+
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 const formSchema = z.object({
     username: z.string().min(5, 'Username must be at least 5 characters'),
@@ -21,6 +24,7 @@ export type UserData = z.infer<typeof formSchema>
 
 export default function SignUpForm() {
     const { createUser: createNewUser, isPending } = createUser()
+    const [visible, setVisible] = useState(false)
 
     const form = useForm<UserData>({
         resolver: zodResolver(formSchema),
@@ -31,6 +35,7 @@ export default function SignUpForm() {
         }
     })
     
+
     async function onSubmit(values: UserData) {
         await createNewUser({
             username: values.username, 
@@ -83,7 +88,20 @@ export default function SignUpForm() {
                     <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                            <Input type='password' placeholder='*******' {...field} />
+                            <div className="flex items-center gap-2">
+                            <Input 
+                                type={visible ? 'text' : 'password'}
+                                placeholder='*******' 
+                                {...field} 
+                            />
+                            <button type='button' onClick={() => setVisible(!visible)}>
+                                { visible ? (
+                                    <FaRegEye />
+                                ) : (
+                                    <FaRegEyeSlash />
+                                )}
+                            </button>
+                            </div>
                         </FormControl>
                         <FormMessage />
                     </FormItem>
