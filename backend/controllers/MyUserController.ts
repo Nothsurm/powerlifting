@@ -62,7 +62,10 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 const logoutUser = async (req: Request, res: Response) => {
-    res.clearCookie('jwt')
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    })
     res.status(200).json({ message: 'Logout successfull'})
 }
 

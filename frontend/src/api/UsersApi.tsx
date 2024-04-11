@@ -56,6 +56,9 @@ export const loginUser = () => {
             body: JSON.stringify(user)
         });
 
+        console.log(response);
+        
+
         if (!response.ok) {
             throw new Error('Wrong credentials')
         }
@@ -70,7 +73,7 @@ export const loginUser = () => {
 
     if (isSuccess) {
         toast.success('Successfully logged in')
-        navigate('/')
+       navigate('/')
     }
     if (isError) {
         toast.error('Wrong Credentials')
@@ -78,6 +81,47 @@ export const loginUser = () => {
 
     return {
         loginUser,
+        isPending
+    }
+}
+
+export const logoutUser = () => {
+    const navigate = useNavigate()
+    const logoutUserRequest = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/users/logout`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Logout Unsuccessfull')
+        }
+    };
+
+    const {
+        mutateAsync: logoutUser,
+        isPending,
+        isSuccess,
+        isError
+    } = useMutation({mutationFn: logoutUserRequest})
+
+    console.log(isError);
+    
+
+    if (isSuccess) {
+        toast.success('Successfully logged out')
+        navigate('/')
+    }
+
+    if (isError) {
+        console.log(isError.toString());
+        
+    }
+    
+    return {
+        logoutUser,
         isPending
     }
 }

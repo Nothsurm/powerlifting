@@ -41,7 +41,7 @@ export default function SignInForm() {
             email: values.email,
             password: values.password
         })
-        dispatch(setCredentials({...values}))
+        dispatch(setCredentials({email: values.email}))
     }
 
   return (
@@ -91,8 +91,12 @@ export default function SignInForm() {
                 )}    
             />
             <p className='text-sm text-blue-500 hover:underline'>Forgot Password?</p>
-            <Button type='submit' className='bg-blue-500 hover:bg-blue-600 w-full'>
-                Sign In
+            <Button type='submit' disabled={isPending} className='bg-blue-500 hover:bg-blue-600 w-full'>
+                { isPending ? (
+                    <p>Signing In...</p>
+                ) : (
+                    <p>Sign In</p>
+                )}
             </Button>
             <div className="flex gap-2 text-sm">
                 <p className='text-sm'>Don't have an account?</p>
