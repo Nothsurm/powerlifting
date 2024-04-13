@@ -3,21 +3,36 @@ import { CircleUserRound } from 'lucide-react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { logout } from '@/redux/features/authSlice'
 
 import { logoutUser } from '@/api/UsersApi';
+import { useLogoutMutation } from '@/redux/api/usersApiSlice'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function UsernameMenu() {
     const { userInfo } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
-    const { logoutUser: logoutUserRequest, isPending } = logoutUser()
+    //const { logoutUser: logoutUserRequest, isPending } = logoutUser()
+    const [isLoading, setLoading] = useState(false)
+    const navigate = useNavigate()
+
+    const [logoutApiCall] = useLogoutMutation()
 
     const logoutCurrentUser = async () => {
-        dispatch(logout())
-        await logoutUserRequest()
+        setLoading(true)
+        try {
+            dispatch(logout())
+            await logoutApiCall().unwrap()
+            toast.success('Successfully logged out')
+            navigate('/')
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+        }
     }
 
   return (
@@ -44,8 +59,8 @@ export default function UsernameMenu() {
             </DropdownMenuItem>
             <Separator />
             <DropdownMenuItem>
-                <Button onClick={() => logoutCurrentUser()} disabled={isPending} className='flex flex-1 bg-blue-500'>
-                    { isPending ? (
+                <Button onClick={() => logoutCurrentUser()} disabled={isLoading} className='flex flex-1 bg-blue-500'>
+                    { isLoading ? (
                         <p>Logging out...</p>
                     ) : (
                         <p>Log Out</p>
