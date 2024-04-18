@@ -13,12 +13,14 @@ import Home from './pages/Home.tsx';
 import Auth from './pages/Auth.tsx';
 import Signin from './pages/Signin.tsx';
 import store from './redux/store.ts';
+import Profile from './pages/Profile.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<App />}>
         <Route index={true}  element={<Home />} />
+        <Route path='/profile' element={<Profile />} />
       </Route>
       <Route path='/signup' element={<Auth />} />
       <Route path='/signin' element={<Signin />} />

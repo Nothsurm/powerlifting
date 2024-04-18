@@ -8,7 +8,6 @@ import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { logout } from '@/redux/features/authSlice'
 
-import { logoutUser } from '@/api/UsersApi';
 import { useLogoutMutation } from '@/redux/api/usersApiSlice'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -48,7 +47,7 @@ export default function UsernameMenu() {
                 </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-                <Link to='/' className='font-bold hover:text-blue-500'>
+                <Link to='/profile' className='font-bold hover:text-blue-500'>
                     Profile
                 </Link>
             </DropdownMenuItem>
