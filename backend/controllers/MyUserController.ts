@@ -69,9 +69,33 @@ const logoutUser = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Logout successfull'})
 }
 
+const updateUser = async (req: Request, res: Response) => {
+    try {
+        const { username, password } = req.body
+        const user = await User.findById(req.user)
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+        }
+
+        user.username = username
+        if (password) {
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(password, salt)
+            user.password = hashedPassword
+        }
+        
+        await user.save()
+        res.send(user)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error updating User' })
+    }
+}
 
 export default {
     createUser,
     loginUser,
     logoutUser,
+    updateUser
 }

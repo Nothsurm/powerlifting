@@ -1,8 +1,20 @@
+import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import jwt from 'jsonwebtoken';
 
+interface JwtPayload {
+    userId: string
+  }
 
-export const authenticate = async (req, res, next) => {
+declare global {
+    namespace Express {
+        interface Request {
+            user?: Record<string,any>
+        }
+    }
+}
+
+export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     let token;
 
     //Read JWT from the 'jwt' cookie
@@ -10,7 +22,7 @@ export const authenticate = async (req, res, next) => {
 
     if (token) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
             req.user = await User.findById(decoded.userId).select("-password")
             next();
         } catch (error) {
